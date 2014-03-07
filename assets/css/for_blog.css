@@ -1,0 +1,10 @@
+section.slide .content {
+  border: 1px solid #e1e1e8;
+  padding: 10px;
+  margin: 20px 5px;
+}
+
+section.slide {
+  padding: 0;
+  margin: 0;
+}

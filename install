@@ -1,0 +1,60 @@
+#!/bin/bash
+
+if [ "$2" != "" ];  then
+  echo 'Please pass just the install directory. Example: ./install ~/myblog'
+  exit 0
+elif [ "$1" == "" ];  then
+  echo 'Please pass the install directory. Example: ./install ~/myblog'
+  exit 0
+fi
+
+target=`dirname "$1"`/`basename "$1"`
+go=""
+while [ "$go" != "y" ]; do
+  echo "Install jekyl-slides to $target ? (y/n)"
+  read -n 1 check
+  echo ""
+  if [ "$check" == "Y" ]; then
+    go="y"
+  elif [ "$check" == "y" ]; then
+    go="y"
+  elif [ "$check" == "N" ]; then
+    exit 0
+  elif [ "$check" == "n" ]; then 
+    exit 0
+  fi
+done
+
+if [ ! -d "$target" ]; then
+  echo "DOES NOT EXIST: $target"
+  exit 0
+fi
+
+echo "Installing..."
+
+echo "cp slides.rb $target/plugins"
+mkdir -p $target/plugins
+cp slides.rb $target/plugins
+
+echo "cp -R assets/* $target/source/assets/slides"
+mkdir -p $target/source/assets/slides
+cp -R assets/* $target/source/assets/slides
+
+echo "cp -R layouts/* $target/source/_layouts"
+mkdir -p $target/source/_layouts
+cp -R layouts/* $target/source/_layouts
+
+# TODO: if $target/source/_includes/custom/head.html exists and doens't have it, add
+# <link rel="stylesheet" href="{{ root_url }}/assets/slides/css/for_blog.css">
+header="$target/source/_includes/custom/head.html"
+echo "Adding for_blog.css to head.html"
+if [ -e  $header ]; then
+  if grep -q for_blog.css "$header"; then
+    echo "  already has it"
+  else
+    printf "\n<link rel=\"stylesheet\" href=\"{{ root_url }}/assets/slides/css/for_blog.css\">\n" >> $header
+  fi
+  
+else
+  echo "  $header does not exist"
+fi

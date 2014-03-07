@@ -1,0 +1,46 @@
+/* only show the core content */
+
+div.slides > *:not(.slide):not(.stack) {
+  /* children of slides that are  not */
+  display: none;
+  height: 0;
+}
+
+
+section.slide > *:not(.content) {
+  /* children of a slide that is not content */
+  display: none;
+  height: 0;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin-bottom: 50px;
+}
+
+.reveal p {
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.reveal section img {
+  border: 0;
+  box-shadow: none;
+}
+
+.highlight table {
+  width:100%;
+}
+
+.highlight .gutter {
+  width:40px;
+  text-align:right;
+}
+
+.reveal pre {
+  width: 100%;
+}
